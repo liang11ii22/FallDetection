@@ -10,12 +10,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.falldetection.R;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class MainActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener
+{
 
 
     private ViewPager mViewPager;
@@ -92,9 +96,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         imgButtonContact = ((ImageButton) mTabContact.findViewById(R.id.btn_tab_top_contact));
         imgButtonSetting = ((ImageButton) mTabSetting.findViewById(R.id.btn_tab_top_setting));
 
-        MainTab01 tab01 = new MainTab01();
-        MainTab02 tab02 = new MainTab02();
-        MainTab03 tab03 = new MainTab03();
+        ProfileTab tab01 = new ProfileTab();
+        HomeTab tab02 = new HomeTab();
+        MapTab tab03 = new MapTab();
         SettingTab tab04 = new SettingTab();
         mFragments.add(tab01);
         mFragments.add(tab02);
@@ -143,7 +147,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }else if(v.getId() == R.id.id_tab_top_contact){
             mViewPager.setCurrentItem(2);
         }else if(v.getId() == R.id.id_tab_top_setting){
-            mViewPager.setCurrentItem(3);
-}
+                mViewPager.setCurrentItem(3);
         }
+    }
+
 }

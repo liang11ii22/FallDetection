@@ -36,4 +36,6 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_authentication">AuthenticationActivity</string>
     <string name="title_activity_fitbit">FitbitActivity</string>
+
+    <string name="btn_monitor">start</string>
 </resources>

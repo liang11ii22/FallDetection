@@ -256,7 +256,7 @@ public class BluetoothArduinoFragment extends Fragment {
     }
 
     /**
-     * The Handler that gets information back from the BluetoothChatService
+     * The Handler that gets information back from the BluetoothArduinoService
      */
     private final Handler mHandler = new Handler() {
         @Override
