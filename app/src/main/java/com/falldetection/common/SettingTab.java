@@ -1,9 +1,7 @@
 package com.falldetection.common;
 
 import android.bluetooth.BluetoothAdapter;
-import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
@@ -13,15 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.falldetection.R;
 import com.falldetection.fitbit.FitbitActivity;
 
 public class SettingTab extends Fragment implements CompoundButton.OnCheckedChangeListener {
 	private Switch blueSwitch;
-	private TextView gpsSwitch;
+	private Button gpsSwitch;
 	private View settingLayout;
 	private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();;
 	@Override
@@ -37,7 +33,7 @@ public class SettingTab extends Fragment implements CompoundButton.OnCheckedChan
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		blueSwitch = (Switch) getActivity().findViewById(R.id.switch_bluetooth);
-		gpsSwitch = (TextView) getActivity().findViewById(R.id.switch_gps);
+		gpsSwitch = (Button) getActivity().findViewById(R.id.switch_gps);
 
 		blueSwitch.setOnCheckedChangeListener(this);
 		gpsSwitch.setOnClickListener(new View.OnClickListener() {

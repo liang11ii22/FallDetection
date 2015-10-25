@@ -47,10 +47,9 @@ public class BluetoothActivity extends ActivityBase {
         return super.onPrepareOptionsMenu(menu);
     }
     @Override
-    public void onStart(){
-        super.onStart();
+    public void onResume(){
+        super.onResume();
         Intent intent = new Intent();
-
         setResult(Activity.RESULT_OK, intent);
     }
     @Override

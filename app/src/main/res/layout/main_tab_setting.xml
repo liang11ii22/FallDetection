@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ly_main_weixin"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#fcfcfc"
-    android:orientation="vertical" >
+    android:background="#a7cafb"
+    android:orientation="vertical">
 
 	<LinearLayout
 		android:layout_width="fill_parent"
@@ -15,9 +14,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="Bluetooth:"
-			android:textSize="18sp"/>
+			android:textSize="24sp"
+			android:textColor="@android:color/black"/>
 		<Switch
-			android:layout_width="fill_parent"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textOn="Bluetooth On:"
 			android:textOff="Bluetooth Off:"
@@ -36,12 +36,14 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="GPS:"
-			android:textSize="24sp"/>
-		<TextView
+			android:textSize="24sp"
+			android:textColor="@android:color/black"/>
+		<Button
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textOn = "GPS Setting"
-			android:textSize="24sp"
+			android:text = "GPS Setting"
+			android:gravity="center"
+			android:textSize="36sp"
 			android:id="@+id/switch_gps"
 			android:layout_weight="1" />
 

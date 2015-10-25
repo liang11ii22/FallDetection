@@ -3,11 +3,13 @@
 	android:orientation="vertical"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
+	android:background="#a7cafb"
 	>
 	<TextView
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:text="Emergency Phone Number:"
+		android:textColor="@android:color/black"
 		android:textSize="24sp"
 		/>
 	<EditText
@@ -43,12 +45,14 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:text="Please input your personl information"
+		android:textColor="@android:color/black"
 		android:textSize="24sp"
 		/>
 	<TextView
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:text="Name："
+		android:textColor="@android:color/black"
 		android:textSize="24sp"
 		/>
 	<EditText
@@ -60,6 +64,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:text="Age："
+		android:textColor="@android:color/black"
 		android:textSize="24sp"
 		/>
 	<EditText
@@ -75,6 +80,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="Height(cm)："
+			android:textColor="@android:color/black"
 			android:textSize="24sp"
 			/>
 		<EditText
@@ -89,9 +95,8 @@
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-
+			android:textColor="@android:color/black"
 			android:text="Weight(kg)："
-
 			android:textSize="24sp"
 			/>
 		<EditText
@@ -108,6 +113,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="Sex:"
+			android:textColor="@android:color/black"
 			android:textSize="24sp"
 			/>
 

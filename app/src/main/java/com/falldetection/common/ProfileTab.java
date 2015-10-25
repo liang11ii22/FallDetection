@@ -39,6 +39,7 @@ public class ProfileTab extends Fragment{
 	View rootView;
 
 	DataStoreUtils data;
+	BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -63,7 +64,6 @@ public class ProfileTab extends Fragment{
 		btnStop.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 				bluetoothAdapter.disable();
 				btnStop.setVisibility(View.GONE);
 				btnStart.setVisibility(View.VISIBLE);
@@ -128,11 +128,10 @@ public class ProfileTab extends Fragment{
 								weight_editText.getText().toString(),
 								gender);
 
-//					BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//					if (!mBluetoothAdapter.isEnabled()) {
-//						Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//						startActivityForResult(enableIntent, 3);
-//					}
+					if (bluetoothAdapter.isEnabled()) {
+						Intent intent = new Intent(getActivity().getApplicationContext(), BluetoothActivity.class);
+						startActivityForResult(intent, REQUEST_BLUETOOTH);
+					}
 //					String phone_number = data.getPhone();
 //					List<String> content = data.getAll();
 //					StringBuffer sms_content = new StringBuffer("HELP:");
@@ -158,8 +157,6 @@ public class ProfileTab extends Fragment{
 	}
 
 	 public boolean turnOnBluetooth() {
-		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
 		if (bluetoothAdapter != null)
 		{
 			return bluetoothAdapter.enable();
