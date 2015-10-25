@@ -52,7 +52,7 @@
 			android:id="@+id/image_heart"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:src="@drawable/heart"
+			android:src="@drawable/heartbeat"
 			android:scaleType="fitCenter"/>
 
 

@@ -80,7 +80,7 @@ public class AlarmActivity extends Activity {
             mPool = new SoundPool(1,AudioManager.STREAM_MUSIC,0);
         }
 
-        return mPool.load(getApplicationContext(),R.raw.alarm,1);
+        return mPool.load(getApplicationContext(),R.raw.alarmsound,1);
     }
 
     public class TimeCount extends CountDownTimer{
