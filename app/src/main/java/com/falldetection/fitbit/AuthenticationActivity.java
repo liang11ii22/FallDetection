@@ -1,4 +1,4 @@
-package com.falldetection.common;
+package com.falldetection.fitbit;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.falldetection.R;
-import com.falldetection.common.FitbitActivity;
+import com.falldetection.fitbit.FitbitActivity;
 import com.falldetection.fitbit.FitbitApi;
 
 import org.scribe.builder.ServiceBuilder;

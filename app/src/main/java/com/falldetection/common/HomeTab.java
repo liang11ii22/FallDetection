@@ -1,5 +1,6 @@
 package com.falldetection.common;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -9,10 +10,12 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.falldetection.R;
+import com.falldetection.fitbit.FitbitActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ public class HomeTab extends Fragment implements MyViewPager.OnSingleTouchListen
 	private int oldPosition = 0;
 
 	private View home;
+	private ImageButton heartButton;
 
 	private ScheduledExecutorService scheduledExecutorService;
 
@@ -51,11 +55,12 @@ public class HomeTab extends Fragment implements MyViewPager.OnSingleTouchListen
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		imageResId = new int[] { R.drawable.a, R.drawable.d, R.drawable.e };
+
+		imageResId = new int[] { R.drawable.tips1, R.drawable.tips2, R.drawable.tips3 };
 		titles = new String[imageResId.length];
-		titles[0] = "fffffffffffff";
-		titles[1] = "aaaaaaa";
-		titles[2] = "bbbb";
+		titles[0] = "Watch your step";
+		titles[1] = "Wear comfortable shoes";
+		titles[2] = "Use hands keeping balance";
 
 		imageViews = new ArrayList<ImageView>();
 
@@ -66,22 +71,26 @@ public class HomeTab extends Fragment implements MyViewPager.OnSingleTouchListen
 			imageViews.add(imageView);
 		}
 
-
 		dots = new ArrayList<View>();
 		dots.add(home.findViewById(R.id.v_dot0));
 		dots.add(home.findViewById(R.id.v_dot1));
 		dots.add(home.findViewById(R.id.v_dot2));
-		dots.add(home.findViewById(R.id.v_dot3));
-		dots.add(home.findViewById(R.id.v_dot4));
 
 		tv_title = (TextView) home.findViewById(R.id.tv_title);
 		tv_title.setText(titles[0]);
-
 
 		viewPager = (MyViewPager) home.findViewById(R.id.vp);
 		viewPager.setAdapter(new MyAdapter());
 		viewPager.addOnPageChangeListener(this);
 
+		heartButton = (ImageButton) home.findViewById(R.id.image_heart);
+		heartButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity().getApplicationContext(), FitbitActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override

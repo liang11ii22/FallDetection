@@ -26,9 +26,10 @@ public class BluetoothArduinoService {
     private static final String NAME_INSECURE = "PhoneBluetoothSerialServiceInSecure";
 
     // Unique UUID for this application
-
-    private static final UUID MY_UUID_SECURE = UUID.fromString("7A9C3B55-78D0-44A7-A94E-A93E3FE118CE");
-    private static final UUID MY_UUID_INSECURE = UUID.fromString("23F18142-B389-4772-93BD-52BDBB2C03E9");
+    //UUID.fromString("7A9C3B55-78D0-44A7-A94E-A93E3FE118CE");
+    private static final UUID MY_UUID_SECURE = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
+    //UUID.fromString("23F18142-B389-4772-93BD-52BDBB2C03E9");
+    private static final UUID MY_UUID_INSECURE = UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
 
     // Well known SPP UUID
     private static final UUID UUID_SPP = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -90,7 +91,6 @@ public class BluetoothArduinoService {
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
 
         setState(STATE_NONE);
-
 //      Listen isn't working with Arduino. Ignore since assuming the phone will initiate the connection.
 //        setState(STATE_LISTEN);
 //
@@ -340,11 +340,11 @@ public class BluetoothArduinoService {
             // Get a BluetoothSocket for a connection with the given BluetoothDevice
             try {
                 if (secure) {
-//                     tmp = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
-                    tmp = device.createRfcommSocketToServiceRecord(UUID_SPP);
+                     tmp = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
+//                    tmp = device.createRfcommSocketToServiceRecord(UUID_SPP);
                 } else {
-//                    tmp = device.createInsecureRfcommSocketToServiceRecord(MY_UUID_INSECURE);
-                    tmp = device.createInsecureRfcommSocketToServiceRecord(UUID_SPP);
+                    tmp = device.createInsecureRfcommSocketToServiceRecord(MY_UUID_INSECURE);
+//                    tmp = device.createInsecureRfcommSocketToServiceRecord(UUID_SPP);
                 }
             } catch (IOException e) {
                 Log.e(TAG, "Socket Type: " + mSocketType + "create() failed", e);
@@ -369,7 +369,6 @@ public class BluetoothArduinoService {
                 Log.e(TAG, e.toString());
 
                 // Some 4.1 devices have problems, try an alternative way to connect
-                // See https://github.com/don/BluetoothSerial/issues/89
                 try {
                     Log.i(TAG,"Trying fallback...");
                     mmSocket = (BluetoothSocket) mmDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(mmDevice,1);

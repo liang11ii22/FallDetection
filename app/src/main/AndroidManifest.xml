@@ -4,24 +4,46 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
+    <permission
+        android:name="com.falldetection.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.falldetection.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <!-- My Location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Maps API needs OpenGL ES2.0. -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name">
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name" >
+
         <activity
-            android:name=".common.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:name=".common.Splash"
+            android:label="Fall Detection"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".common.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".common.DeviceListActivity"
@@ -31,17 +53,26 @@
             android:name=".common.BluetoothActivity"
             android:label="@string/select_device" />
         <activity
-            android:name=".common.AuthenticationActivity"
+            android:name=".fitbit.AuthenticationActivity"
             android:label="@string/title_activity_authentication"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
-            android:name=".common.FitbitActivity"
+            android:name=".fitbit.FitbitActivity"
             android:label="@string/title_activity_fitbit" >
         </activity>
+        <activity
+            android:name=".common.AlarmActivity"
+            android:label="@string/title_activity_alarm" >
+        </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAnVGw5kg9RCz-3WYgTpsploEqRCFlU2tk"/>
+            android:value="AIzaSyAnVGw5kg9RCz-3WYgTpsploEqRCFlU2tk" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="8115000" />
+
     </application>
 
 </manifest>

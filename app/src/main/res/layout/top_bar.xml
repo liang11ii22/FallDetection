@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:background="#0000"
                 android:clickable="false"
-                android:src="@drawable/tab_weixin_pressed" />
+                android:src="@drawable/home" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:background="#0000"
                 android:clickable="false"
-                android:src="@drawable/tab_find_frd_pressed" />
+                android:src="@drawable/profile" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:background="#0000"
                 android:clickable="false"
-                android:src="@drawable/tab_address_pressed" />
+                android:src="@drawable/map" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:background="#0000"
                 android:clickable="false"
-                android:src="@drawable/tab_settings_pressed" />
+                android:src="@drawable/setting" />
 
             <TextView
                 android:layout_width="wrap_content"

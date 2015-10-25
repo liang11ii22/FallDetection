@@ -11,6 +11,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.telephony.SmsManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,8 +28,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.falldetection.R;
+import com.falldetection.common.AlarmActivity;
 import com.falldetection.common.DeviceListActivity;
 import com.falldetection.logger.Log;
+import com.falldetection.util.DataStoreUtils;
+import com.falldetection.util.LocationStorUtils;
+
+import java.util.List;
 
 
 public class BluetoothArduinoFragment extends Fragment {
@@ -93,7 +99,6 @@ public class BluetoothArduinoFragment extends Fragment {
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-            // Otherwise, setup the chat session
         } else if (mService == null) {
             setupChat();
         }
@@ -285,10 +290,36 @@ public class BluetoothArduinoFragment extends Fragment {
                     mConversationArrayAdapter.add("Android:  " + writeMessage);
                     break;
                 case Constants.MESSAGE_READ:
-                    byte[] readBuf = (byte[]) msg.obj;
+                    String readBuf = (String) msg.obj;
                     // construct a string from the valid bytes in the buffer
-                    String readMessage = new String(readBuf, 0, msg.arg1);
-                    mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
+//                    String readMessage = new String(readBuf, 0, msg.arg1);
+
+                    mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readBuf);
+
+                    if(readBuf.equals("#111#")){
+                        DataStoreUtils info = new DataStoreUtils(getActivity());
+                        LocationStorUtils location = new LocationStorUtils(getActivity());
+
+                        String phone_number = info.getPhone();
+					    List<String> content = info.getAll();
+					    StringBuffer sms_content = new StringBuffer("HELP:"+"\n");
+                        sms_content.append("Name Age Height Weight Sex"+"\n");
+					    for (int i = 0; i < content.size(); i++) {
+						    sms_content.append(content.get(i)).append(" ");
+					    }
+                        sms_content.append("Location:" + location.getAddress());
+					    SmsManager smsManager = SmsManager.getDefault();
+					    if (sms_content.length() > 70) {
+							List<String> contents = smsManager.divideMessage(sms_content.toString());
+							for (String sms : contents) {
+								smsManager.sendTextMessage(phone_number, null, sms, null, null);
+							}
+					    } else {
+							smsManager.sendTextMessage(phone_number, null, sms_content.toString(), null, null);
+					    }
+                        Intent intent = new Intent(getActivity().getApplicationContext(), AlarmActivity.class);
+                        startActivity(intent);
+                    }
                     break;
                 case Constants.MESSAGE_READ_RAW:
                         byte[] rawMessage = (byte[]) msg.obj;

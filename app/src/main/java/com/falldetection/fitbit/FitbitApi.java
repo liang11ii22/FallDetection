@@ -16,6 +16,7 @@ public class FitbitApi extends DefaultApi10a {
 
     @Override
     public String getAccessTokenEndpoint() {
+
         return "https://api.fitbit.com/oauth/access_token";
     }
 

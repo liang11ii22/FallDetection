@@ -38,4 +38,8 @@
     <string name="title_activity_fitbit">FitbitActivity</string>
 
     <string name="btn_monitor">start</string>
+    <string name="btn_stop">stop</string>
+    <string name="title_activity_alarm">AlarmActivity</string>
+    <string name="title_activity_splash">Splash</string>
+
 </resources>

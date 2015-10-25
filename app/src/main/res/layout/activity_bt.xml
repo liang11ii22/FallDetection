@@ -18,7 +18,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="HELLO"></TextView>
+                android:text="Please choose your device and connect it!"></TextView>
         </ScrollView>
 
         <fragment

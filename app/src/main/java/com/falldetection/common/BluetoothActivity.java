@@ -1,5 +1,7 @@
 package com.falldetection.common;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
@@ -44,7 +46,13 @@ public class BluetoothActivity extends ActivityBase {
 
         return super.onPrepareOptionsMenu(menu);
     }
+    @Override
+    public void onStart(){
+        super.onStart();
+        Intent intent = new Intent();
 
+        setResult(Activity.RESULT_OK, intent);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {

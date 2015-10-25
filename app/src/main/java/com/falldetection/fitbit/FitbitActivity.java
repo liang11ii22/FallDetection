@@ -1,4 +1,4 @@
-package com.falldetection.common;
+package com.falldetection.fitbit;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,14 +21,18 @@ public class FitbitActivity extends Activity {
     static final int GET_PIN_REQUEST = 101;  // The request code
     static OAuthService service;
     public static Token requestToken;
+    private StringBuffer sb = new StringBuffer("");
+    static TextView tvOutput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fitbit);
 
+        tvOutput = (TextView) findViewById(R.id.tvOutput);
         startActivityForResult(new Intent(this, AuthenticationActivity.class), GET_PIN_REQUEST);
     }
+
 
     public void btnRetrieveData(View view) {
         EditText etPIN = (EditText) findViewById(R.id.etPIN);
@@ -42,22 +46,25 @@ public class FitbitActivity extends Activity {
                 Token accessToken = service.getAccessToken(requestToken, v);
 
                 OAuthRequest request = new OAuthRequest(Verb.GET,
-                        "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d.json");
+                        "https://api.fitbit.com/1/user/3PHPHW/activities/heart/date/today/7d.json");
                 service.signRequest(accessToken, request); // the access token from step
                 // 4
                 final Response response = request.send();
-                final TextView tvOutput = (TextView) findViewById(R.id.tvOutput);
+//                final TextView tvOutput = (TextView) findViewById(R.id.tvOutput);
 
+                sb.append(response.getBody());
                 // Visual output should run on main thread again...
                 tvOutput.post(new Runnable() {
                     @Override
                     public void run() {
-                        tvOutput.setText(response.getBody());
+                        tvOutput.setText(sb);
                     }
                 });
             }
         }).start();
+
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent){

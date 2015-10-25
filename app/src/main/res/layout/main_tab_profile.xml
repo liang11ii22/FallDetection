@@ -16,14 +16,29 @@
 		android:id="@+id/phone_number_editText"
 		android:hint="0+XXXXXXXXX"
 		/>
-	<Button
-		android:id="@+id/btn_monitor"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center_horizontal"
-		android:text="@string/btn_monitor"
-		android:textSize="48sp"
-		/>
+	<FrameLayout
+		android:id="@+id/layout_switch_button"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<Button
+			android:id="@+id/btn_monitor"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:text="@string/btn_monitor"
+			android:textSize="48sp"
+			/>
+		<Button
+			android:id="@+id/btn_stop"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:text="@string/btn_stop"
+			android:textSize="48sp"
+			android:visibility="gone"
+			/>
+	</FrameLayout>
+
 	<TextView
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -118,13 +133,4 @@
 				android:textSize="24sp"/>
 		</RadioGroup>
 	</LinearLayout>
-
-	<Button
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center_horizontal"
-		android:text="save"
-		android:textSize="36sp"
-		android:id="@+id/save_button"
-		/>
 </LinearLayout>
