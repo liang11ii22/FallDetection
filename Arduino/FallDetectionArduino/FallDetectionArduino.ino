@@ -14,7 +14,7 @@ RTIMUSettings settings;                               // the settings object
 
 //  DISPLAY_INTERVAL sets the rate at which results are displayed
 
-#define DISPLAY_INTERVAL  400                         // interval between pose displays
+#define DISPLAY_INTERVAL  500                         // interval between pose displays
 
 //  SERIAL_PORT_SPEED defines the speed to use for the debug serial port
 
@@ -23,6 +23,20 @@ RTIMUSettings settings;                               // the settings object
 unsigned long lastDisplay;
 unsigned long lastRate;
 int sampleCount;
+
+float acceler;
+float acceFT = 2.2;
+float gravity = 1.0;
+
+float gyrosco;
+float gyroFT = 180.0;
+
+//int historyLength = 10;
+//float motionHistory[2][10];
+//int currntPoint = 0;
+//int fallDuration = 5
+//int judgePoint;
+//int judgeWindow = 4;
 
 SoftwareSerial mySerial(9,10);
 
@@ -84,20 +98,49 @@ void loop()
             sampleCount = 0;
             lastRate = now;
         }
+        
+        acceler = sqrt( sq(imu->getAccel().x()) + sq(imu->getAccel().y()) + sq(imu->getAccel().z())) - gravity;
+        gyrosco = sqrt( sq(imu->getGyro().x() * RTMATH_RAD_TO_DEGREE) + sq(imu->getGyro().y() * RTMATH_RAD_TO_DEGREE) + sq(imu->getGyro().z()) * RTMATH_RAD_TO_DEGREE);
+        
+        if ((acceler >= acceFT) && (gyrosco >= gyroFT)){
+          mySerial.println("#111#");
+          
+          
+        }
+        
+//        motionHistory[0][currntPoint] = acceler;
+//        motionHistory[1][currntPoint] = gyrosco;
+        
+//        if ( acceler >= acceUFT ){
+//          judgePoint = ( currntPoint - judgeWindow + historyLength) % historyLength;
+//          for ( int i = 0; i ++ ; i < judgeWindow ){
+//            if ( (motionHistory[0][judgePoint] > acceUFT) & (motionHistory[1][judgePoint] > gyroUFT)){
+//              
+//              mySerial.println("Alarm: 1");
+//              break;
+//            }
+//            judgePoint = ( judgePoint - 1 + historyLength) % historyLength;
+//          }
+//        }
+        
+//        currntPoint = ( currntPoint + 1 ) % infoLength;
+                
         if ((now - lastDisplay) >= DISPLAY_INTERVAL) {
             lastDisplay = now;
             
-            mySerial.print(">>GyroX :"); mySerial.println(imu->getGyro().x() * RTMATH_RAD_TO_DEGREE);
-            mySerial.print(">>GyroY :"); mySerial.println(imu->getGyro().y() * RTMATH_RAD_TO_DEGREE);
-            mySerial.print(">>GyroZ :"); mySerial.println(imu->getGyro().z() * RTMATH_RAD_TO_DEGREE);
-            
-            mySerial.print(">>AccelX:"); mySerial.println(imu->getAccel().x() * RTMATH_RAD_TO_DEGREE);
-            mySerial.print(">>AccelY:"); mySerial.println(imu->getAccel().y() * RTMATH_RAD_TO_DEGREE);
-            mySerial.print(">>AccelZ:"); mySerial.println(imu->getAccel().z() * RTMATH_RAD_TO_DEGREE);
-            
-            mySerial.print(">>Roll  :"); mySerial.println(fusion.getFusionPose().x() * RTMATH_RAD_TO_DEGREE);
-            mySerial.print(">>Pitch :"); mySerial.println(fusion.getFusionPose().y() * RTMATH_RAD_TO_DEGREE);
-            mySerial.print(">>Yaw   :"); mySerial.println(fusion.getFusionPose().z() * RTMATH_RAD_TO_DEGREE);
+            mySerial.print("Acce:"); mySerial.print(acceler);  
+            mySerial.print("  Gyro:"); mySerial.println(gyrosco);   
+//            mySerial.print(">>GyroX :"); mySerial.println(imu->getGyro().x() * RTMATH_RAD_TO_DEGREE);
+//            mySerial.print(">>GyroY :"); mySerial.println(imu->getGyro().y() * RTMATH_RAD_TO_DEGREE);
+//            mySerial.print(">>GyroZ :"); mySerial.println(imu->getGyro().z() * RTMATH_RAD_TO_DEGREE);
+                  
+//            mySerial.print(">>AccelX:"); mySerial.println(imu->getAccel().x());
+//            mySerial.print(">>AccelY:"); mySerial.println(imu->getAccel().y());
+//            mySerial.print(">>AccelZ:"); mySerial.println(imu->getAccel().z());
+//            
+//            mySerial.print(">>Roll  :"); mySerial.println(fusion.getFusionPose().x() * RTMATH_RAD_TO_DEGREE);
+//            mySerial.print(">>Pitch :"); mySerial.println(fusion.getFusionPose().y() * RTMATH_RAD_TO_DEGREE);
+//            mySerial.print(">>Yaw   :"); mySerial.println(fusion.getFusionPose().z() * RTMATH_RAD_TO_DEGREE);
         }
     }
 }
