@@ -296,7 +296,7 @@ public class BluetoothArduinoFragment extends Fragment {
 
                     mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readBuf);
 
-                    if(readBuf.equals("#111#")){
+                    if(readBuf.equals("@")){
                         DataStoreUtils info = new DataStoreUtils(getActivity());
                         LocationStorUtils location = new LocationStorUtils(getActivity());
 
@@ -308,15 +308,64 @@ public class BluetoothArduinoFragment extends Fragment {
 						    sms_content.append(content.get(i)).append(" ");
 					    }
                         sms_content.append("Location:" + location.getAddress());
-					    SmsManager smsManager = SmsManager.getDefault();
-					    if (sms_content.length() > 70) {
-							List<String> contents = smsManager.divideMessage(sms_content.toString());
+                        sms_content.append("\n"+"Posture: Up");
+                        SmsManager smsManager = SmsManager.getDefault();
+                            if (sms_content.length() > 70) {
+                                List<String> contents = smsManager.divideMessage(sms_content.toString());
 							for (String sms : contents) {
 								smsManager.sendTextMessage(phone_number, null, sms, null, null);
 							}
 					    } else {
 							smsManager.sendTextMessage(phone_number, null, sms_content.toString(), null, null);
 					    }
+                        Intent intent = new Intent(getActivity().getApplicationContext(), AlarmActivity.class);
+                        startActivity(intent);
+                    }else if (readBuf.equals("#")){
+                        DataStoreUtils info = new DataStoreUtils(getActivity());
+                        LocationStorUtils location = new LocationStorUtils(getActivity());
+
+                        String phone_number = info.getPhone();
+                        List<String> content = info.getAll();
+                        StringBuffer sms_content = new StringBuffer("HELP:"+"\n");
+                        sms_content.append("Name Age Height Weight Sex"+"\n");
+                        for (int i = 0; i < content.size(); i++) {
+                            sms_content.append(content.get(i)).append(" ");
+                        }
+                        sms_content.append("Location:" + location.getAddress());
+                        sms_content.append("\n"+"Posture: lie");
+                        SmsManager smsManager = SmsManager.getDefault();
+                        if (sms_content.length() > 70) {
+                            List<String> contents = smsManager.divideMessage(sms_content.toString());
+                            for (String sms : contents) {
+                                smsManager.sendTextMessage(phone_number, null, sms, null, null);
+                            }
+                        } else {
+                            smsManager.sendTextMessage(phone_number, null, sms_content.toString(), null, null);
+                        }
+                        Intent intent = new Intent(getActivity().getApplicationContext(), AlarmActivity.class);
+                        startActivity(intent);
+                    }else if(readBuf.equals("$")){
+                        DataStoreUtils info = new DataStoreUtils(getActivity());
+                        LocationStorUtils location = new LocationStorUtils(getActivity());
+
+                        String phone_number = info.getPhone();
+                        List<String> content = info.getAll();
+                        StringBuffer sms_content = new StringBuffer("HELP:"+"\n");
+                        sms_content.append("Name Age Height Weight Sex"+"\n");
+                        for (int i = 0; i < content.size(); i++) {
+                            sms_content.append(content.get(i)).append(" ");
+                        }
+                        sms_content.append("Location:" + location.getAddress());
+                        sms_content.append("\n"+"Posture: prone");
+                        SmsManager smsManager = SmsManager.getDefault();
+                        if (sms_content.length() > 70) {
+                            List<String> contents = smsManager.divideMessage(sms_content.toString());
+                            for (String sms : contents) {
+                                smsManager.sendTextMessage(phone_number, null, sms, null, null);
+                            }
+                        } else {
+                            smsManager.sendTextMessage(phone_number, null, sms_content.toString(), null, null);
+                        }
                         Intent intent = new Intent(getActivity().getApplicationContext(), AlarmActivity.class);
                         startActivity(intent);
                     }
