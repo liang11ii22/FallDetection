@@ -97,7 +97,8 @@ void loop()
         }
         
         acceler = sqrt( sq(imu->getAccel().x()) + sq(imu->getAccel().y()) + sq(imu->getAccel().z())) - gravity;
-        gyrosco = sqrt( sq(imu->getGyro().x() * RTMATH_RAD_TO_DEGREE) + sq(imu->getGyro().y() * RTMATH_RAD_TO_DEGREE) + sq(imu->getGyro().z()) * RTMATH_RAD_TO_DEGREE);
+        //gyrosco = sqrt( sq(imu->getGyro().x() * RTMATH_RAD_TO_DEGREE) + sq(imu->getGyro().y() * RTMATH_RAD_TO_DEGREE) + sq(imu->getGyro().z()) * RTMATH_RAD_TO_DEGREE);
+        gyrosco = sqrt( sq(imu->getGyro().x()) + sq(imu->getGyro().y()) + sq(imu->getGyro().z())) * RTMATH_RAD_TO_DEGREE;
         
         if ((acceler >= acceFT) && (gyrosco >= gyroFT)){
           alarmFlag = true;
@@ -106,46 +107,55 @@ void loop()
         if ((now - lastDisplay) >= DISPLAY_INTERVAL) {
             lastDisplay = now;
             
+            //mySerial.println("Fall Detcting...");
+            
             if (alarmFlag == true){
-              mySerial.println("#111#");
-              delay(500);
+//              mySerial.println("!"); //fall
+//              Serial.println("!");
+              delay(2000);
               
               for (int j = 0; j<50; j ++){
                 whatPose = whatPose + fusion.getFusionPose().y() * RTMATH_RAD_TO_DEGREE;
-//                mySerial.print("Pose Value: ");
-//                mySerial.println(whatPose);
+                Serial.print("Pose Value: ");
+                Serial.println(whatPose);
               }
               whatPose = whatPose / 50;
-//              mySerial.print("Pose Value Final: ");
-//              mySerial.println(whatPose);
+              Serial.print("Pose Value Final: ");
+              Serial.println(whatPose);
               
               if ( -50 < whatPose && whatPose< 60 ){
-                mySerial.println("#000#");
+                mySerial.println("@"); //posture after fall: up
+                Serial.println("@");
               }
               else if ( -90 <= whatPose && whatPose <= -50 ){
-                mySerial.println("#001#");
+                mySerial.println("#"); //lie on back
+                Serial.println("#");
               }
               else if ( 60 <= whatPose && whatPose <= 90 ){         
-               mySerial.println("#010#");
+               mySerial.println("$");//lie on face
+               Serial.println("$");
              }
              mySerial.println("");
              whatPose = 0.0;
              alarmFlag = false;
+             delay(1000*10);
             }
-            Serial.print(">>Acce:"); Serial.println(acceler);  
-            Serial.print(">>Gyro:"); Serial.println(gyrosco);   
-//            mySerial.print(">>GyroX :"); mySerial.println(imu->getGyro().x() * RTMATH_RAD_TO_DEGREE);
-//            mySerial.print(">>GyroY :"); mySerial.println(imu->getGyro().y() * RTMATH_RAD_TO_DEGREE);
-//            mySerial.print(">>GyroZ :"); mySerial.println(imu->getGyro().z() * RTMATH_RAD_TO_DEGREE);
-                  
+//            Serial.print(">>Acce:"); Serial.println(acceler);  
+//            Serial.print(">>Gyro:"); Serial.println(gyrosco);   
+//            Serial.print(">>GyroX :"); Serial.println(imu->getGyro().x() * RTMATH_RAD_TO_DEGREE);
+//            Serial.print(">>GyroY :"); Serial.println(imu->getGyro().y() * RTMATH_RAD_TO_DEGREE);
+//            Serial.print(">>GyroZ :"); Serial.println(imu->getGyro().z() * RTMATH_RAD_TO_DEGREE);
+//            Serial.print(">>GyroX :"); Serial.println(imu->getGyro().x());
+//            Serial.print(">>GyroY :"); Serial.println(imu->getGyro().y());
+//            Serial.print(">>GyroZ :"); Serial.println(imu->getGyro().z());      
 //            mySerial.print(">>AccelX:"); mySerial.println(imu->getAccel().x());
 //            mySerial.print(">>AccelY:"); mySerial.println(imu->getAccel().y());
 //            mySerial.print(">>AccelZ:"); mySerial.println(imu->getAccel().z());
 //            
 //            mySerial.print(">>Roll  :"); mySerial.println(fusion.getFusionPose().x() * RTMATH_RAD_TO_DEGREE);
-            Serial.print(">>Pitch :"); Serial.println(fusion.getFusionPose().y() * RTMATH_RAD_TO_DEGREE);
+//            Serial.print(">>Pitch :"); Serial.println(fusion.getFusionPose().y() * RTMATH_RAD_TO_DEGREE);
 //            mySerial.print(">>Yaw   :"); mySerial.println(fusion.getFusionPose().z() * RTMATH_RAD_TO_DEGREE);
-            Serial.println("");
+//            Serial.println("");
         }
     }
 }
