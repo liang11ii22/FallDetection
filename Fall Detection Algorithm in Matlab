@@ -1,0 +1,68 @@
+% Continuous data (may in the form of string) would be sent to mobile App 
+% through bluetooth
+
+% Each set of data include 'accel_x, accel_y, accel_z, ang_x, ang_y, ang_z'
+% They are accelerations and angular rate on x,y and z axis
+
+
+% Set the threshold for judgement
+LFT_accel=0.3;               % Lower Fall Threshold  0.3g (0.3*9.8m^2/s)
+UFT_accel=2.8;               % Upper Fall Threshold  2.8g
+UFT_ang=200;                 % Upper Fall Threshold  200 degree/s
+
+% receive/and judge    six data are processed in one loop
+memLen=10;                       % The length of motion data memory
+motionData=zeros(6,memLen);      % Motion data memery
+memPoint=1;                      % Current processing time point
+lastPoint=0;                     % The last time point before current one
+                                 % with a period of fall duration
+
+while(1)
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                             %
+% This part is about extracting sensor data   %
+%    with arduino library for 9 DOF IMU:      %    
+%         accel_x, accel_y, accel_z,          % 
+%          ang_x, ang_y, ang_z                %
+%                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% store the received date in to current time point - memPoint
+motionData(1,memPoint)=accel_x;     % Acceleration on axis x
+motionData(2,memPoint)=accel_y;     % Acceleration on axis y
+motionData(3,memPoint)=accel_z;     % Acceleration on axis z
+motionData(4,memPoint)=ang_x;       % Angular rate on axis x
+motionData(5,memPoint)=ang_y;       % Angular rate on axis y
+motionData(6,memPoint)=ang_z;       % Angular rate on axis z
+
+% Calculate the module of current acceleration 
+Acc=sqrt(accel_x^2+accel_y^2+accel_z^2);
+
+% decide if the Acc is less than LFT for acceleration
+if (Acc<=LFT_accel)
+    
+    % calculate the time point 9 bit before current as UFT judgement bit
+    lastPoint=mod(memPoint-9,memLen);
+    
+    % calculate the Acc and Angular rate in UFT judgement bit
+    Acc=sqrt(motionData(1,lastPoint)^2+motionData(2,lastPoint)^2+motionData(3,lastPoint)^2);
+    Angular=sqrt(motionData(4,lastPoint)^2+motionData(5,lastPoint)^2+motionData(6,lastPoint)^2);
+    
+    % See if the Acc and Angular rate are both large then their UFTs
+    if (Acc>=UFT_accel && Angular>=UFT_ang)
+        disp('A Fall Has Happened!');
+        
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %                                           %
+        % This part is for Android to send message  % 
+        %                                           %             
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    end
+end
+
+% If there is no fall happening, the loop will go on and the current point
+% will move to the next bit
+memPoint=mod(memPoint+1,memLen);
+
+end

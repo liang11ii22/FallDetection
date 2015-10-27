@@ -41,8 +41,8 @@ void setup()
 {
     int errcode;
   
-    Serial.begin(SERIAL_PORT_SPEED);
-    mySerial.begin(SERIAL_PORT_SPEED);
+    Serial.begin(SERIAL_PORT_SPEED);  //print to the PC
+    mySerial.begin(SERIAL_PORT_SPEED); //print to the bluetooth
     Wire.begin();
     imu = RTIMU::createIMU(&settings);                        // create the imu object
   
@@ -107,11 +107,9 @@ void loop()
         if ((now - lastDisplay) >= DISPLAY_INTERVAL) {
             lastDisplay = now;
             
-            //mySerial.println("Fall Detcting...");
+            mySerial.println("Fall Detcting...");
             
             if (alarmFlag == true){
-//              mySerial.println("!"); //fall
-//              Serial.println("!");
               delay(2000);
               
               for (int j = 0; j<50; j ++){
